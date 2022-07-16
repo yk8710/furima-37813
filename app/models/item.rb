@@ -1,5 +1,6 @@
 class Item < ApplicationRecord
   belongs_to :user
+  has_one_attached :image
 
   validates :category_id, numericality: { other_than: 0, message: "Category can't be blank"}
   validates :item_status_id, numericality: { other_than: 0, message: "Item status can't be blank" }
