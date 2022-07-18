@@ -3,9 +3,10 @@ require 'rails_helper'
 RSpec.describe Item, type: :model do
   before do
     @item = FactoryBot.create(:item)
+    sleep(1)
   end
 
-  descibe '商品の出品登録' do
+  describe '商品の出品登録' do
     context '出品登録ができるとき' do
       it 'すべての入力事項が存在すれば登録できる' do
         expect(@item).to be_valid
@@ -36,7 +37,7 @@ RSpec.describe Item, type: :model do
       end
       it '販売価格の入力が半角数字で9999999円以下であれば登録できる' do
         @item.price = 9999999
-        except(@item).to be_valid
+        expect(@item).to be_valid
       end
     end
 
