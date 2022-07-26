@@ -1,14 +1,13 @@
 class OrdersController < ApplicationController
   before_action :authenticate_user!
+  before_action :ensure_current_user, only: [:index, :create]
 
   def index
     @order_buyer = OrderBuyer.new
-    @item = Item.find(params[:item_id])
   end
 
   def create
     @order_buyer = OrderBuyer.new(order_params)
-    @item = Item.find(params[:item_id])
     @item.price = Item.find(params[:item_id]).price
     if @order_buyer.valid?
       pay_item
@@ -20,6 +19,17 @@ class OrdersController < ApplicationController
   end
 
   private
+
+  def set_item
+    @item = Item.find(params[:item_id])
+  end
+
+  def ensure_current_user
+    @item = Item.find(params[:item_id])
+    if @item.user_id == current_user.id || @item.order != nil
+      redirect_to root_path
+    end
+  end
 
   def order_params
     params.require(:order_buyer).permit(:postal_code, :prefecture, :city, :block, :building_name, :phone_number).merge(
@@ -35,4 +45,5 @@ class OrdersController < ApplicationController
       currency: 'jpy'
     )
   end
+
 end
