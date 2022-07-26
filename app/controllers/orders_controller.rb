@@ -8,7 +8,6 @@ class OrdersController < ApplicationController
 
   def create
     @order_buyer = OrderBuyer.new(order_params)
-    @item.price = Item.find(params[:item_id]).price
     if @order_buyer.valid?
       pay_item
       @order_buyer.save
@@ -19,10 +18,6 @@ class OrdersController < ApplicationController
   end
 
   private
-
-  def set_item
-    @item = Item.find(params[:item_id])
-  end
 
   def ensure_current_user
     @item = Item.find(params[:item_id])

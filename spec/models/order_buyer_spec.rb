@@ -92,7 +92,7 @@ RSpec.describe OrderBuyer, type: :model do
         @order_buyer.valid?
         expect(@order_buyer.errors.full_messages).to include("Phone number invalid. Input only number")
       end
-      it '電話番号が11桁に満たない場合登録できないこと' do
+      it '電話番号が9桁以下だと登録できない' do
         @order_buyer.phone_number = '090123456'
         @order_buyer.valid?
         expect(@order_buyer.errors.full_messages).to include("Phone number invalid. Input only number")
