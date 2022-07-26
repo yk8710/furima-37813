@@ -5,7 +5,7 @@ RSpec.describe OrderBuyer, type: :model do
     @user = FactoryBot.create(:user)
     @item = FactoryBot.create(:item)
     @order_buyer = FactoryBot.build(:order_buyer, user_id: @user.id, item_id: @item.id)
-    sleep 0.1
+    sleep(1)
   end
   describe '配送先情報の登録' do
     context '配送先情報が登録できるとき' do
@@ -34,6 +34,10 @@ RSpec.describe OrderBuyer, type: :model do
       end
       it '番地が空でなければ登録できる' do
         @order_buyer.block = "青山1-1-1"
+        expect(@order_buyer).to be_valid
+      end
+      it '建物名が空でも登録できる' do
+        @order_buyer.building_name = nil
         expect(@order_buyer).to be_valid
       end
       it '電話番号が11桁以内でかつ「-」ハイフンなしであれば登録できる' do
@@ -84,7 +88,7 @@ RSpec.describe OrderBuyer, type: :model do
         expect(@order_buyer.errors.full_messages).to include("Phone number can't be blank")
       end
       it '電話番号に「-」ハイフンがあると登録できない' do
-        @order_buyer.phone_number = '090-123-456'
+        @order_buyer.phone_number = '090 - 123 - 4567'
         @order_buyer.valid?
         expect(@order_buyer.errors.full_messages).to include("Phone number invalid. Input only number")
       end
@@ -92,6 +96,11 @@ RSpec.describe OrderBuyer, type: :model do
         @order_buyer.phone_number = '090123456'
         @order_buyer.valid?
         expect(@order_buyer.errors.full_messages).to include("Phone number invalid. Input only number")
+      end
+      it 'トークンが空だと登録できない' do
+        @order_buyer.token = nil
+        @order_buyer.valid?
+        expect(@order_buyer.errors.full_messages).to include("Token can't be blank")
       end
     end
   end
