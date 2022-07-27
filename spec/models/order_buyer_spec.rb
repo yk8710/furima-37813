@@ -27,13 +27,13 @@ RSpec.describe OrderBuyer, type: :model do
       it '都道府県が「---」以外であれば登録できる' do
         @order_buyer.prefecture_id = 1
         expect(@order_buyer).to be_valid
-      end 
+      end
       it '市区町村が空でなければ登録できる' do
-        @order_buyer.city = "横浜市緑区"
+        @order_buyer.city = '横浜市緑区'
         expect(@order_buyer).to be_valid
       end
       it '番地が空でなければ登録できる' do
-        @order_buyer.block = "青山1-1-1"
+        @order_buyer.block = '青山1-1-1'
         expect(@order_buyer).to be_valid
       end
       it '建物名が空でも登録できる' do
@@ -70,7 +70,7 @@ RSpec.describe OrderBuyer, type: :model do
       it '郵便番号が「-」ハイフンなしだと登録できない' do
         @order_buyer.postal_code = '1234567'
         @order_buyer.valid?
-        expect(@order_buyer.errors.full_messages).to include("Postal code is invalid. Enter it as follows (e.g. 123-4567)")
+        expect(@order_buyer.errors.full_messages).to include('Postal code is invalid. Enter it as follows (e.g. 123-4567)')
       end
       it '市区町村が空だと登録できない' do
         @order_buyer.city = nil
@@ -90,12 +90,12 @@ RSpec.describe OrderBuyer, type: :model do
       it '電話番号に「-」ハイフンがあると登録できない' do
         @order_buyer.phone_number = '090 - 123 - 4567'
         @order_buyer.valid?
-        expect(@order_buyer.errors.full_messages).to include("Phone number invalid. Input only number")
+        expect(@order_buyer.errors.full_messages).to include('Phone number invalid. Input only number')
       end
       it '電話番号が9桁以下だと登録できない' do
         @order_buyer.phone_number = '090123456'
         @order_buyer.valid?
-        expect(@order_buyer.errors.full_messages).to include("Phone number invalid. Input only number")
+        expect(@order_buyer.errors.full_messages).to include('Phone number invalid. Input only number')
       end
       it 'トークンが空だと登録できない' do
         @order_buyer.token = nil
