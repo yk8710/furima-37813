@@ -5,7 +5,7 @@ FactoryBot.define do
     block { Faker::Address.street_address }
     building_name { Faker::Address.street_address }
     phone_number { Faker::Number.number(digits: 11) }
-    prefecture { Faker::Number.between(from: 1, to: 47) }
+    prefecture_id { Faker::Number.between(from: 1, to: 47) }
     token { Faker::Internet.password(min_length: 20, max_length: 30) }
   end
 end
